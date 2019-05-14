@@ -1,44 +1,44 @@
-"use strict"
-const Board = use("App/Models/Board")
+"use strict";
+const Board = use("App/Models/Board");
 
 class BoardController {
   async index() {
-    const boards = Board.all()
+    const boards = Board.all();
 
-    return boards
+    return boards;
   }
 
   async store({ request }) {
-    const data = request.only(["title", "description", "date_execution"])
-    const board = await Board.create(data)
+    const data = request.only(["title", "description", "date_execution"]);
+    const board = await Board.create(data);
 
-    return board
+    return board;
   }
 
   async show({ params }) {
-    const board = await Board.findOrFail(params.id)
-    return board
+    const board = await Board.findOrFail(params.id);
+    return board;
   }
 
-  async update({ request }) {
-    const board = await Board.findOrFail(params.id)
-    const data = await request.only(["title", "description", "date_execution"])
+  async update({ request, params }) {
+    const board = await Board.findOrFail(params.id);
+    const data = await request.only(["title", "description", "date_execution"]);
 
-    board.merge(data)
-    await board.save()
+    board.merge(data);
+    await board.save();
 
-    return board
+    return board;
   }
 
   async destroy({ params }) {
-    const board = await Board.findOrFail(params.id)
+    const board = await Board.findOrFail(params.id);
     try {
-      await board.delete()
-      return true
+      await board.delete();
+      return true;
     } catch (error) {
-      return false
+      return false;
     }
   }
 }
 
-module.exports = BoardController
+module.exports = BoardController;
