@@ -9,7 +9,7 @@ class BoardController {
   }
 
   async store({ request }) {
-    const data = await request.only(["title", "description", "date_execution"])
+    const data = request.only(["title", "description", "date_execution"])
     const board = await Board.create(data)
 
     return board
@@ -32,8 +32,12 @@ class BoardController {
 
   async destroy({ params }) {
     const board = await Board.findOrFail(params.id)
-
-    await board.delete()
+    try {
+      await board.delete()
+      return true
+    } catch (error) {
+      return false
+    }
   }
 }
 
